@@ -28,10 +28,10 @@ This package provides comprehensive CRUD operations for managing users with diff
 | Method | Endpoint            | Description                        |
 |--------|--------------------|------------------------------------|
 | GET    | `/admins`           | List all admins                     |
-| POST   | `/admins`           | Create a new user                  |
-| GET    | `/admins/{id}`      | Get user details                   |
-| PUT    | `/admins/{id}`      | Update a user                      |
-| DELETE | `/admins/{id}`      | Delete a user                      |
+| POST   | `/admins`           | Create a new admin                  |
+| GET    | `/admins/{id}`      | Get admin details                   |
+| PUT    | `/admins/{id}`      | Update a admin                      |
+| DELETE | `/admins/{id}`      | Delete a admin                      |
 | GET    | `/admins?role=admin`| List admins by role (e.g., Admin)   |
 
 ## Requirements
@@ -55,7 +55,7 @@ Add the following to your `composer.json` to use the package from a local path:
 ## Installation
 
 ```bash
-composer require admin/user
+composer require admin/admins
 ```
 
 ## License
