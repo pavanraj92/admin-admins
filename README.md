@@ -1,0 +1,63 @@
+# Admin Users
+
+This package provides comprehensive CRUD operations for managing users with different roles—Admin, Super Admin, and Accountant Manager—in the admin panel.
+
+## Features
+
+- Role-based user management (Admin, Super Admin, Accountant Manager)
+- Create new users with specific roles
+- View a list of users filtered by role
+- Update user details and roles
+- Delete users
+
+## Roles
+
+- **Admin**: Manage users and perform standard admin tasks.
+- **Super Admin**: Full access, including managing Admins and Accountant Managers.
+- **Accountant Manager**: Access to accounting-related user management.
+
+## Usage
+
+1. **Create**: Add a new user with name, email, password, and assign a role.
+2. **Read**: View all users, filter by role, and paginate results.
+3. **Update**: Edit user information and change roles.
+4. **Delete**: Remove users as needed.
+
+## Example Endpoints
+
+| Method | Endpoint            | Description                        |
+|--------|--------------------|------------------------------------|
+| GET    | `/admins`           | List all admins                     |
+| POST   | `/admins`           | Create a new user                  |
+| GET    | `/admins/{id}`      | Get user details                   |
+| PUT    | `/admins/{id}`      | Update a user                      |
+| DELETE | `/admins/{id}`      | Delete a user                      |
+| GET    | `/admins?role=admin`| List admins by role (e.g., Admin)   |
+
+## Requirements
+
+- PHP 8.2+
+- Laravel Framework
+
+## Update `composer.json` file
+
+Add the following to your `composer.json` to use the package from a local path:
+
+```json
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/pavanraj92/admin-admins.git"
+    }
+]
+```
+
+## Installation
+
+```bash
+composer require admin/user
+```
+
+## License
+
+MIT

@@ -1,0 +1,22 @@
+{
+    "name": "admin/admins",
+    "description": "Manage administrator accounts, assign roles, and control access to backend features and settings.",
+    "type": "library",
+    "version": "1.0.0",  
+    "license": "MIT",
+    "autoload": {
+      "psr-4": {
+        "admin\\admins\\": "src/"
+      }
+    },
+    "extra": { 
+      "laravel": {
+        "providers": [
+          "admin\\admins\\AdminServiceProvider"
+        ]
+      }
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
+  }
+  
