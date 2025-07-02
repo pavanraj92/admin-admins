@@ -20,7 +20,7 @@ class AdminManagerController extends Controller
     {
         try {
             $admins = Admin::
-                where('role_id','!=', 1)
+                where('id', '!=', 1)
                 ->filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->latest()
@@ -36,8 +36,7 @@ class AdminManagerController extends Controller
     public function create()
     {
         try {
-            $roles = \DB::table('admin_roles')->get();
-            return view('admin::admin.createOrEdit', compact('roles'));
+            return view('admin::admin.createOrEdit');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load admins: ' . $e->getMessage());
         }
@@ -77,8 +76,7 @@ class AdminManagerController extends Controller
     public function edit(Admin $admin)
     {
         try {
-            $roles = \DB::table('admin_roles')->get();
-            return view('admin::admin.createOrEdit', compact('admin', 'roles'));
+            return view('admin::admin.createOrEdit', compact('admin'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load admin for editing: ' . $e->getMessage());
         }

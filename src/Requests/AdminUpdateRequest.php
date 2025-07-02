@@ -15,7 +15,6 @@ class AdminUpdateRequest extends FormRequest
             'email' => 'required|email|max:255|unique:admins,email,' . $this->route('admin')->id,            
             'first_name' => 'nullable|string|min:3|max:255',
             'last_name' => 'nullable|string|min:3|max:255',
-            'role_id' => 'nullable|integer|min:0',
             'mobile' => 'required|digits_between:3,15|numeric',
             'status' => 'required|in:0,1',
         ];

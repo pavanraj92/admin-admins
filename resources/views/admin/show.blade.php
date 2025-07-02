@@ -18,7 +18,7 @@
                 <div class="card">                    
                     <div class="table-responsive">
                          <div class="card-body">      
-                            <table class="table table-bordered table-responsive-lg">                            
+                            <table class="table table-responsive-lg table-no-border">                          
                                 <tbody>
                                     <tr>
                                         <th scope="row">Name</th>
@@ -31,10 +31,6 @@
                                     <tr>
                                         <th scope="row">Mobile</th>
                                         <td scope="col">{{ $admin->mobile }}</td>
-                                    </tr>
-                                    <tr>
-                                        <th scope="row">Role</th>
-                                        <td scope="col">{{ $admin?->role?->name ?? 'N/A' }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Status</th>

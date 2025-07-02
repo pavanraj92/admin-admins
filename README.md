@@ -58,6 +58,13 @@ Add the following to your `composer.json` to use the package from a local path:
 composer require admin/admins
 ```
 
+## Publish Files
+
+After installing, publish the module's migrations, config, views, or other assets:
+
+```bash
+php artisan vendor:publish --tag=admin
+
 ## License
 
 MIT

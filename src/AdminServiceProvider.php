@@ -24,7 +24,7 @@ class AdminServiceProvider extends ServiceProvider
             __DIR__ . '/../config/admin.php' => config_path('constants/admin/admin.php'),
             __DIR__ . '/../src/Controllers' => app_path('Http/Controllers/Admin/AdminManager'),
             __DIR__ . '/../src/Models' => app_path('Models/Admin/Admin'),
-            __DIR__ . '/routes/web.php' => base_path('routes/admin/admin_admin.php'),
+            __DIR__ . '/routes/web.php' => base_path('routes/admin/admin.php'),
         ], 'admin');
 
 
@@ -36,7 +36,12 @@ class AdminServiceProvider extends ServiceProvider
             return; // Avoid errors before migration
         }
 
-        $slug = DB::table('admins')->latest()->value('website_slug') ?? 'admin';
+        $admin = DB::table('admins')
+            ->orderBy('created_at', 'asc')
+            ->first();
+            
+        $slug = $admin->website_slug ?? 'admin';
+
 
         Route::middleware('web')
             ->prefix("{$slug}/admin") // dynamic prefix

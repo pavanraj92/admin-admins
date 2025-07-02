@@ -18,7 +18,6 @@ class Admin extends Model
         'name',
         'first_name',
         'last_name',
-        'role_id',
         'email',
         'password',
         'mobile',
@@ -62,11 +61,6 @@ class Admin extends Model
         $first = trim($this->first_name ?? '');
         $last = trim($this->last_name ?? '');
         return trim("{$first} {$last}");
-    }
-
-    public function role()
-    {
-        return $this->belongsTo(AdminRole::class, 'role_id');
     }
 }
 

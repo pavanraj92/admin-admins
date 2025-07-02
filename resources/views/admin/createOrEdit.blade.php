@@ -68,23 +68,6 @@
                         <div class="row">
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <label>Role <span class="text-danger">*</span></label>
-                                    <select name="role_id" class="form-control select2" required>
-                                        <option value="">Select Role</option>
-                                        @foreach($roles as $role)
-                                            <option value="{{ $role->id }}"
-                                                {{ (old('role_id', isset($admin) ? $admin->role_id : '') == $role->id) ? 'selected' : '' }}>
-                                                {{ $role->name }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                    @error('role_id')
-                                        <div class="text-danger validation-error">{{ $message }}</div>
-                                    @enderror
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-group">
                                     <label>Status<span class="text-danger">*</span></label>
                                     <select name="status" class="form-control select2" required>
                                         <option value="0" {{ (($admin?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
@@ -97,7 +80,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <button type="submit" class="btn btn-primary">Save</button>
+                            <button type="submit" class="btn btn-primary" id="saveBtn">Save</button>
                             <a href="{{ route('admin.admins.index') }}" class="btn btn-secondary">Back</a>
                         </div>
                     </form>
@@ -169,6 +152,11 @@
                         minlength: "Mobile number must be at least 3 digits long",
                         maxlength: "Mobile number must not exceed 15 digits"
                     }
+                },
+                submitHandler: function(form) {
+                    const $btn = $('#saveBtn');
+                    $btn.prop('disabled', true).text('Saving...');
+                    form.submit();
                 },
                 errorElement: 'div',
                 errorClass: 'text-danger custom-error',
