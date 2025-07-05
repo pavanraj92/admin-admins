@@ -25,7 +25,7 @@
                             <div class="col-md-6">                                
                                 <div class="form-group">
                                     <label>First Name<span class="text-danger">*</span></label>
-                                    <input type="text" name="first_name" class="form-control"
+                                    <input type="text" name="first_name" class="form-control alphabets-only"
                                         value="{{ $admin?->first_name ?? old('first_name') }}" required>
                                     @error('first_name')
                                         <div class="text-danger validation-error">{{ $message }}</div>
@@ -35,7 +35,7 @@
                             <div class="col-md-6">                                
                                 <div class="form-group">
                                     <label>Last Name<span class="text-danger">*</span></label>
-                                    <input type="text" name="last_name" class="form-control"
+                                    <input type="text" name="last_name" class="form-control alphabets-only"
                                         value="{{ $admin?->last_name ?? old('last_name') }}" required>
                                     @error('last_name')
                                         <div class="text-danger validation-error">{{ $message }}</div>
@@ -57,7 +57,7 @@
                             <div class="col-md-6">                                
                                 <div class="form-group">
                                     <label>Mobile<span class="text-danger">*</span></label>
-                                    <input type="text" name="mobile" class="form-control"
+                                    <input type="text" name="mobile" class="form-control numbers-only"
                                         value="{{ $admin?->mobile ?? old('mobile') }}" required>
                                     @error('mobile')
                                         <div class="text-danger validation-error">{{ $message }}</div>
@@ -110,26 +110,47 @@
             // Initialize Select2 for any select elements with the class 'select2'
             $('.select2').select2();
 
+            $.validator.addMethod(
+                "alphabetsOnly",
+                function (value, element) {
+                    return this.optional(element) || /^[a-zA-Z\s]+$/.test(value);
+                },
+                "Please enter letters only"
+            );
+
+            $.validator.addMethod(
+                "customEmail",
+                function (value, element) {
+                    return (
+                        this.optional(element) ||
+                        /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(value)
+                    );
+                },
+                "Please enter a valid email address"
+            );
             //jquery validation for the form
             $('#adminForm').validate({
                 ignore: [],
                 rules: {
                     first_name: {
                         required: true,
-                        minlength: 3
+                        minlength: 3,
+                        alphabetsOnly: true
                     },
                     last_name: {
                         required: true,
-                        minlength: 3
+                        minlength: 3,
+                        alphabetsOnly: true
                     },
                     email: {
                         required: true,
                         email: true,
+                        customEmail: true
                     },
                     mobile: {
                         required: true,
                         digits: true,
-                        minlength: 3,
+                        minlength: 7,
                         maxlength: 15,
                     }
                 },
@@ -149,7 +170,7 @@
                     mobile: {
                         required: "Please enter mobile no.",
                         digits: "Please enter a valid mobile number",
-                        minlength: "Mobile number must be at least 3 digits long",
+                        minlength: "Mobile number must be at least 7 digits long",
                         maxlength: "Mobile number must not exceed 15 digits"
                     }
                 },
