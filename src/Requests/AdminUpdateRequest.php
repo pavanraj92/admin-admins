@@ -20,7 +20,7 @@ class AdminUpdateRequest extends FormRequest
             ],
             'first_name' => 'nullable|string|min:3|max:255',
             'last_name' => 'nullable|string|min:3|max:255',
-            'mobile' => 'required|digits_between:3,15|numeric',
+            'mobile' => 'required|digits_between:7,15|numeric',
             'status' => 'required|in:0,1',
         ];
     }
