@@ -123,7 +123,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="4" class="text-center">No admin found.</td>
+                                            <td colspan="5" class="text-center">No admin found.</td>
                                         </tr>
                                     @endif
                                 </tbody>
