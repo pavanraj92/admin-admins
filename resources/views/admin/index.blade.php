@@ -92,7 +92,9 @@
                                                     @endif
                                                 </td>
                                                 <td>
-                                                    {{ $admin->created_at->format('Y-m-d H:i:s') }}
+                                                    {{ $admin->created_at
+                                                        ? $admin->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
+                                                        : '—' }}
                                                 </td>
                                                 <td>
                                                     <a href="{{ route('admin.admins.edit', $admin) }}"
@@ -121,7 +123,7 @@
                                         @endforeach
                                     @else
                                         <tr>
-                                            <td colspan="6" class="text-center">No admin found.</td>
+                                            <td colspan="4" class="text-center">No admin found.</td>
                                         </tr>
                                     @endif
                                 </tbody>

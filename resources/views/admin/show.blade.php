@@ -18,7 +18,7 @@
                 <div class="card">                    
                     <div class="table-responsive">
                          <div class="card-body">      
-                            <table class="table table-responsive-lg table-no-border">                          
+                            <table class="table table-responsive-lg table-no-border">
                                 <tbody>
                                     <tr>
                                         <th scope="row">Name</th>
@@ -38,7 +38,9 @@
                                     </tr>    
                                     <tr>
                                         <th scope="row">Created At</th>
-                                        <td scope="col">{{ $admin->created_at ?? 'N/A' }}</td>
+                                        <td scope="col"> {{ $admin->created_at
+                                            ? $admin->created_at->format(config('GET.admin_date_time_format') ?? 'Y-m-d H:i:s')
+                                            : '—' }}</td>
                                     </tr>                                
                                 </tbody>
                             </table>   
