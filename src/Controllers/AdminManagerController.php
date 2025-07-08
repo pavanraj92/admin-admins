@@ -24,7 +24,7 @@ class AdminManagerController extends Controller
                 ->filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->latest()
-                ->paginate(5)
+                ->paginate(Admin::getPerPageLimit())
                 ->withQueryString();
 
             return view('admin::admin.index', compact('admins'));
