@@ -25,8 +25,8 @@ This package provides comprehensive CRUD operations for managing users with diff
 
 ## Example Endpoints
 
-| Method | Endpoint            | Description                        |
-|--------|--------------------|------------------------------------|
+| Method | Endpoint            | Description                         |
+|--------|---------------------|-------------------------------------|
 | GET    | `/admins`           | List all admins                     |
 | POST   | `/admins`           | Create a new admin                  |
 | GET    | `/admins/{id}`      | Get admin details                   |
@@ -55,16 +55,38 @@ Add the following to your `composer.json` to use the package from a local path:
 ## Installation
 
 ```bash
-composer require admin/admins
+composer require admin/admins:@dev
 ```
 
-## Publish Files
+## Usage
 
-After installing, publish the module's migrations, config, views, or other assets:
+1. Publish the configuration and migration files:
+    ```bash
+    php artisan admin:publish --force
 
-```bash
-php artisan vendor:publish --tag=admin
+    composer dump-autoload
+    
+    php artisan migrate
+    ```
+2. Access the Admin manager from your admin dashboard.
+
+## Example
+
+```php
+// Creating a new admin
+$admin = new Admin();
+$admin->first_name = 'John';
+$admin->last_name = 'Doe';
+$admin->email = 'john.doe@example.com';
+$admin->mobile = '9876543210';
+$admin->status = 1;
+$admin->save();
+```
+
+## Customization
+
+You can customize views, routes, and permissions by editing the configuration file.
 
 ## License
 
-MIT
+This package is open-sourced software licensed under the Dotsquares.write code in the readme.md file regarding to the admin/admin manager
