@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use admin\admins\Requests\AdminCreateRequest;
 use admin\admins\Requests\AdminUpdateRequest;
-use admin\admins\Models\Admin;
+use admin\admin_auth\Models\Admin;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use admin\admins\Mail\WelcomeAdminMail;
