@@ -20,6 +20,7 @@ class AdminManagerController extends Controller
         $this->middleware('admincan_permission:admin_manager_edit')->only(['edit', 'update']);
         $this->middleware('admincan_permission:admin_manager_view')->only(['show']);
         $this->middleware('admincan_permission:admin_manager_delete')->only(['destroy']);
+        
     }
     /**
      * Display a listing of the resource.
