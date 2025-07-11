@@ -48,9 +48,11 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-body">
+                        @admincan('admin_manager_create')
                         <div class="text-right">
                             <a href="{{ route('admin.admins.create') }}" class="btn btn-primary mb-3">Create New Admin</a>
                         </div>
+                        @endadmincan
                     
                         <div class="table-responsive">
                             <table class="table">
@@ -97,16 +99,21 @@
                                                         : '—' }}
                                                 </td>
                                                 <td>
+                                                    @admincan('admin_manager_edit')
                                                     <a href="{{ route('admin.admins.edit', $admin) }}"
                                                         data-toggle="tooltip"
                                                         data-placement="top"
                                                         title="Edit this record"
                                                         class="btn btn-success btn-sm"><i class="mdi mdi-pencil"></i></a>
+                                                    @endadmincan
+                                                    @admincan('admin_manager_view')
                                                     <a href="{{ route('admin.admins.show', $admin) }}" 
                                                         data-toggle="tooltip"
                                                         data-placement="top"
                                                         title="View this record"
                                                         class="btn btn-warning btn-sm"><i class="mdi mdi-eye"></i></a>
+                                                    @endadmincan
+                                                    @admincan('admin_manager_delete')
                                                     <a href="javascript:void(0)" 
                                                         data-toggle="tooltip" 
                                                         data-placement="top"
@@ -115,6 +122,7 @@
                                                         data-text="Are you sure you want to delete this record?"                                                    
                                                         data-method="DELETE"
                                                         class="btn btn-danger btn-sm delete-record" ><i class="mdi mdi-delete"></i></a>
+                                                    @endadmincan
                                                 </td>
                                             </tr>
                                             @php
@@ -122,6 +130,7 @@
                                             @endphp
                                         @endforeach
                                     @else
+                                    
                                         <tr>
                                             <td colspan="5" class="text-center">No admin found.</td>
                                         </tr>
