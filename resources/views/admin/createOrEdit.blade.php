@@ -2,11 +2,11 @@
 
 @section('title', 'Admins Management')
 
-@section('page-title', 'Create Admin')
+@section('page-title', isset($admin) ? 'Edit Admin' : 'Create Admin')
 
 @section('breadcrumb')
     <li class="breadcrumb-item active" aria-current="page"><a href="{{ route('admin.admins.index') }}">Manage Admins</a></li>
-    <li class="breadcrumb-item active" aria-current="page">Create Admin</li>
+    <li class="breadcrumb-item active" aria-current="page">{{isset($admin) ? 'Edit Admin' : 'Create Admin'}}</li>
 @endsection
 
 @section('content')
