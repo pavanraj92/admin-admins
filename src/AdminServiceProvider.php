@@ -19,6 +19,8 @@ class AdminServiceProvider extends ServiceProvider
             __DIR__ . '/../resources/views'      // Package views as fallback
         ], 'admin');
         
+        $this->mergeConfigFrom(__DIR__.'/../config/admin.php', 'admin.constants');
+
         // Also register module views with a specific namespace for explicit usage
         if (is_dir(base_path('Modules/Admins/resources/views'))) {
             $this->loadViewsFrom(base_path('Modules/Admins/resources/views'), 'admins-module');
