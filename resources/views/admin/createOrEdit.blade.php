@@ -68,6 +68,23 @@
                     <div class="row">
                         <div class="col-md-6">
                             <div class="form-group">
+                                <label>Role<span class="text-danger">*</span></label>
+                                <select multiple name="role_ids[]" class="form-control select2 @error('role_ids') is-invalid @enderror" required>
+                                    @foreach($roles as $role)
+                                    <option value="{{ $role->id }}"
+                                        {{ in_array($role->id, $assignedRoleIds ?? []) ? 'selected' : '' }}>
+                                        {{ ucfirst($role->name) }}
+                                    </option>
+                                    @endforeach
+                                </select>
+
+                                @error('role_ids')
+                                <div id="role-error" class="text-danger mt-1">{{ $message }}</div>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
                                 <label>Status<span class="text-danger">*</span></label>
                                 <select name="status" class="form-control select2" required>
                                     <option value="0" {{ (($admin?->status ?? old('status')) == '0') ? 'selected' : '' }}>InActive</option>
