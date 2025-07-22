@@ -30,7 +30,7 @@ class AdminManagerController extends Controller
             $admins = Admin::where('id', '!=', 1)
                 ->filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
-                // ->sortable()
+                ->sortable()
                 ->latest()
                 ->paginate(Admin::getPerPageLimit())
                 ->withQueryString();
