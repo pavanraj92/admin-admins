@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use admin\admins\Requests\AdminCreateRequest;
 use admin\admins\Requests\AdminUpdateRequest;
 use admin\admin_auth\Models\Admin;
+use admin\admin_role_permissions\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use admin\admins\Mail\WelcomeAdminMail;
@@ -27,8 +28,7 @@ class AdminManagerController extends Controller
     public function index(Request $request)
     {
         try {
-            $admins = Admin::where('id', '!=', 1)
-                ->filter($request->query('keyword'))
+            $admins = Admin::filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->sortable()
                 ->latest()
@@ -44,7 +44,8 @@ class AdminManagerController extends Controller
     public function create()
     {
         try {
-            return view('admin::admin.createOrEdit');
+            $roles = Role::whereStatus('1')->get();
+            return view('admin::admin.createOrEdit', compact('roles'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load admins: ' . $e->getMessage());
         }
@@ -58,8 +59,16 @@ class AdminManagerController extends Controller
             $plainPassword = \Str::random(8);
             $requestData['password'] = Hash::make($plainPassword);
 
+            // Remove roles from requestData to prevent mass assignment error
+            $roles = $requestData['role_ids'] ?? [];
+            unset($requestData['role_ids']);
             // Create admin
             $admin = Admin::create($requestData);
+
+            // Attach roles to pivot table (admin_role)
+            if (!empty($roles)) {
+                $admin->roles()->attach($roles); // assuming `roles()` is a belongsToMany relation
+            }
 
             // Send welcome mail
             Mail::to($admin->email)->send(new WelcomeAdminMail($admin, $plainPassword));
@@ -84,7 +93,9 @@ class AdminManagerController extends Controller
     public function edit(Admin $admin)
     {
         try {
-            return view('admin::admin.createOrEdit', compact('admin'));
+            $roles = Role::whereStatus('1')->get();
+            $assignedRoleIds = $admin->roles()->pluck('roles.id')->toArray();
+            return view('admin::admin.createOrEdit', compact('admin', 'roles', 'assignedRoleIds'));
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load admin for editing: ' . $e->getMessage());
         }
@@ -95,7 +106,14 @@ class AdminManagerController extends Controller
         try {
             $requestData = $request->validated();
 
+            $roleIds = $requestData['role_ids'] ?? [];
+            unset($requestData['role_ids']);
+
             $admin->update($requestData);
+
+            // Sync roles in pivot table (admin_role)
+            $admin->roles()->sync($roleIds);
+
             return redirect()->route('admin.admins.index')->with('success', 'Admin updated successfully.');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', 'Failed to load admin for editing: ' . $e->getMessage());

@@ -22,6 +22,8 @@ class AdminUpdateRequest extends FormRequest
             'last_name' => 'nullable|string|min:3|max:100',
             'mobile' => 'required|regex:/^[0-9]{7,15}$/',
             'status' => 'required|in:0,1',
+            'role_ids'   => 'required|array',
+            'role_ids.*' => 'exists:roles,id',
         ];
     }
 
