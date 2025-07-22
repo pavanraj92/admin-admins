@@ -20,7 +20,6 @@ class AdminManagerController extends Controller
         $this->middleware('admincan_permission:admin_manager_edit')->only(['edit', 'update']);
         $this->middleware('admincan_permission:admin_manager_view')->only(['show']);
         $this->middleware('admincan_permission:admin_manager_delete')->only(['destroy']);
-        
     }
     /**
      * Display a listing of the resource.
@@ -28,10 +27,10 @@ class AdminManagerController extends Controller
     public function index(Request $request)
     {
         try {
-            $admins = Admin::
-                where('id', '!=', 1)
+            $admins = Admin::where('id', '!=', 1)
                 ->filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
+                // ->sortable()
                 ->latest()
                 ->paginate(Admin::getPerPageLimit())
                 ->withQueryString();
@@ -58,10 +57,10 @@ class AdminManagerController extends Controller
 
             $plainPassword = \Str::random(8);
             $requestData['password'] = Hash::make($plainPassword);
-    
+
             // Create admin
             $admin = Admin::create($requestData);
-    
+
             // Send welcome mail
             Mail::to($admin->email)->send(new WelcomeAdminMail($admin, $plainPassword));
             return redirect()->route('admin.admins.index')->with('success', 'Admin created successfully.');
@@ -136,10 +135,9 @@ class AdminManagerController extends Controller
                 . ' data-id="' . $admin->id . '"'
                 . ' class="btn ' . $btnClass . ' btn-sm update-status">' . $label . '</a>';
 
-            return response()->json(['success' => true, 'message' => 'Status updated to '.$label, 'strHtml' => $strHtml]);
+            return response()->json(['success' => true, 'message' => 'Status updated to ' . $label, 'strHtml' => $strHtml]);
         } catch (\Exception $e) {
             return response()->json(['success' => false, 'message' => 'Failed to delete record.', 'error' => $e->getMessage()], 500);
         }
     }
 }
-
