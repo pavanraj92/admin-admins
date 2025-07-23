@@ -77,8 +77,8 @@
                                 @foreach ($admins as $admin)
                                 <tr>
                                     <th scope="row">{{ $i }}</th>
-                                    <td>{{ $admin->full_name ?? '' }}</td>
-                                    <td>{{ $admin->email ?? '' }}</td>
+                                    <td>{{ $admin->full_name ?? 'N/A' }}</td>
+                                    <td>{{ $admin->email ?? 'N/A' }}</td>
                                     <td>
                                         <!-- create update status functionality-->
                                         @if ($admin->status == '1')
