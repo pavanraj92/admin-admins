@@ -20,9 +20,9 @@
                     <div class="row">
                         <div class="col-md-3">
                             <div class="form-group">
-                                <label for="name">Name</label>
+                                <label for="name">Keyword</label>
                                 <input type="text" name="keyword" id="keyword" class="form-control"
-                                    value="{{ app('request')->query('keyword') }}" placeholder="Enter Name">
+                                    value="{{ app('request')->query('keyword') }}" placeholder="Enter keyword">
                             </div>
                         </div>
                         <div class="col-md-3">
