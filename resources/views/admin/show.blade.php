@@ -22,7 +22,7 @@
                                 <tbody>
                                     <tr>
                                         <th scope="row">Name</th>
-                                        <td scope="col">{{ $admin->full_name ?? 'N/A' }}</td>
+                                        <td scope="col">{{ !empty($admin->full_name) ? $admin->full_name : 'N/A' }}</td>
                                     </tr>         
                                     <tr>
                                         <th scope="row">Email</th>
@@ -30,7 +30,7 @@
                                     </tr>                                
                                     <tr>
                                         <th scope="row">Mobile</th>
-                                        <td scope="col">{{ $admin->mobile }}</td>
+                                        <td scope="col">{{ $admin->mobile ?? 'N/A' }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row">Status</th>
