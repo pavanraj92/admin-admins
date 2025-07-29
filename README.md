@@ -1,6 +1,6 @@
-# Admin Users
+# Admin Users Manager
 
-This package provides comprehensive CRUD operations for managing users with different roles—Admin, Super Admin, and Accountant Manager—in the admin panel.
+This package provides comprehensive CRUD operations for managing admin user in the admin panel.
 
 ## Features
 
@@ -10,11 +10,38 @@ This package provides comprehensive CRUD operations for managing users with diff
 - Update user details and roles
 - Delete users
 
-## Roles
+---
 
-- **Admin**: Manage users and perform standard admin tasks.
-- **Super Admin**: Full access, including managing Admins and Accountant Managers.
-- **Accountant Manager**: Access to accounting-related user management.
+## Requirements
+
+- PHP >=8.2
+- Laravel Framework >= 12.x
+
+---
+
+## Installation
+
+### 1. Add Git Repository to `composer.json`
+
+```json
+"repositories": [
+    {
+        "type": "vcs",
+        "url": "https://github.com/pavanraj92/admin-admins.git"
+    }
+]
+```
+
+### 2. Require the package via Composer
+    ```bash
+    composer require admin/admins:@dev
+    ```
+
+### 3. Publish assets
+    ```bash
+    php artisan admin:publish --force
+    ```
+---
 
 ## Usage
 
@@ -34,59 +61,24 @@ This package provides comprehensive CRUD operations for managing users with diff
 | DELETE | `/admins/{id}`      | Delete a admin                      |
 | GET    | `/admins?role=admin`| List admins by role (e.g., Admin)   |
 
-## Requirements
+---
 
-- PHP 8.2+
-- Laravel Framework
+## Protecting Admin Routes
 
-## Update `composer.json` file
-
-Add the following to your `composer.json` to use the package from a local path:
-
-```json
-"repositories": [
-    {
-        "type": "vcs",
-        "url": "https://github.com/pavanraj92/admin-admins.git"
-    }
-]
-```
-
-## Installation
-
-```bash
-composer require admin/admins:@dev
-```
-
-## Usage
-
-1. Publish the configuration and migration files:
-    ```bash
-    php artisan admin:publish --force
-
-    composer dump-autoload
-    
-    php artisan migrate
-    ```
-2. Access the Admin manager from your admin dashboard.
-
-## Example
+Protect your routes using the provided middleware:
 
 ```php
-// Creating a new admin
-$admin = new Admin();
-$admin->first_name = 'John';
-$admin->last_name = 'Doe';
-$admin->email = 'john.doe@example.com';
-$admin->mobile = '9876543210';
-$admin->status = 1;
-$admin->save();
+Route::middleware(['web','admin.auth'])->group(function () {
+    // Admin users routes here
+});
 ```
+---
 
-## Customization
+## Database Tables
 
-You can customize views, routes, and permissions by editing the configuration file.
+- `admins` - Stores admin users information
+---
 
 ## License
 
-This package is open-sourced software licensed under the Dotsquares.write code in the readme.md file regarding to the admin/admin manager
+This package is open-sourced software licensed under the MIT license.
