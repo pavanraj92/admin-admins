@@ -8,6 +8,8 @@ use Illuminate\Mail\Mailable;
 use Illuminate\Mail\Mailables\Content;
 use Illuminate\Mail\Mailables\Envelope;
 use Illuminate\Queue\SerializesModels;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Schema;
 
 class WelcomeAdminMail extends Mailable
 {
@@ -25,8 +27,8 @@ class WelcomeAdminMail extends Mailable
     public function build()
     {
         try {
-            if (\Schema::hasTable('emails')) {
-                $emailTemplate = \DB::table('emails')->where('slug', 'register_admin')->first(['subject', 'description']);
+            if (Schema::hasTable('emails')) {
+                $emailTemplate = DB::table('emails')->where('slug', 'register_admin')->first(['subject', 'description']);
             } else {
                 $emailTemplate = null;
             }
