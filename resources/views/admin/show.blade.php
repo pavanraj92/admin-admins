@@ -65,7 +65,7 @@
                                                 <label class="font-weight-bold">Role(s):</label>
                                                 <p>
                                                     @forelse($admin?->roles as $role)
-                                                        <span class="badge badge-info">{{ ucwords($role->name) }}</span>
+                                                        <span class="badge badge-secondary">{{ ucwords($role->name) }}</span>
                                                     @empty
                                                         <span class="badge badge-secondary">N/A</span>
                                                     @endforelse
