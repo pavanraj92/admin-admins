@@ -71,7 +71,12 @@
             errorClass: 'text-danger custom-error',
             errorPlacement: function(error, element) {
                 $('.validation-error').hide(); // hide blade errors
-                error.insertAfter(element);
+                if (element.hasClass("select2-hidden-accessible")) {
+                    // place error after the select2 container
+                    error.insertAfter(element.next('.select2'));
+                } else {
+                    error.insertAfter(element);
+                }
             }
         });
     });
