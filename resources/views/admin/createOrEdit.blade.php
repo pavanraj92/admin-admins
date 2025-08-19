@@ -4,9 +4,7 @@
 @section('page-title', isset($admin) ? 'Edit Admin' : 'Create Admin')
 
 @push('styles')
-<link rel="stylesheet" href="https://cdn.ckeditor.com/ckeditor5/43.0.0/ckeditor5.css">
-<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-<link rel="stylesheet" href="{{ asset('backend/custom.css') }}">
+@include('admin::admin.partials.style')
 @endpush
 
 @section('breadcrumb')
@@ -112,5 +110,5 @@
 @endsection
 
 @push('scripts')
-    @include('admin::admin.partials.script')
+@include('admin::admin.partials.script')
 @endpush
