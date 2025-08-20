@@ -11,6 +11,7 @@ use admin\admin_role_permissions\Models\Role;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Mail;
 use admin\admins\Mail\WelcomeAdminMail;
+use Illuminate\Support\Facades\Auth;
 
 class AdminManagerController extends Controller
 {
@@ -28,7 +29,9 @@ class AdminManagerController extends Controller
     public function index(Request $request)
     {
         try {
-            $admins = Admin::filter($request->query('keyword'))
+            $authId = Auth::guard('admin')->id();
+            $admins = Admin::where('id', '!=', $authId)
+                ->filter($request->query('keyword'))
                 ->filterByStatus($request->query('status'))
                 ->sortable()
                 ->latest()
