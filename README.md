@@ -39,7 +39,7 @@ This package provides comprehensive CRUD operations for managing admin user in t
 
 ### 3. Publish assets
     ```bash
-    php artisan admin:publish --force
+    php artisan admins:publish --force
     ```
 ---
 
