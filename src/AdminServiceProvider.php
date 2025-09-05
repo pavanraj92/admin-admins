@@ -18,8 +18,15 @@ class AdminServiceProvider extends ServiceProvider
             resource_path('views/admin/admin'), // Published views second
             __DIR__ . '/../resources/views'      // Package views as fallback
         ], 'admin');
-        
-        $this->mergeConfigFrom(__DIR__.'/../config/admin.php', 'admin.constants');
+
+        // Load published module config first (if it exists), then fallback to package config
+        if (file_exists(base_path('Modules/Admins/config/admin.php'))) {
+            $this->mergeConfigFrom(base_path('Modules/Admins/config/admin.php'), 'admin.constants');
+        } else {
+            // Fallback to package config if published config doesn't exist
+            $this->mergeConfigFrom(__DIR__ . '/../config/commission.php', 'admin.constants');
+        }
+
 
         // Also register module views with a specific namespace for explicit usage
         if (is_dir(base_path('Modules/Admins/resources/views'))) {
@@ -29,14 +36,14 @@ class AdminServiceProvider extends ServiceProvider
         // Only publish automatically during package installation, not on every request
         // Use 'php artisan admins:publish' command for manual publishing
         // $this->publishWithNamespaceTransformation();
-        
+
         // Standard publishing for non-PHP files
         $this->publishes([
+            __DIR__ . '/../config/' => base_path('Modules/Admins/config/'),
             __DIR__ . '/../resources/views' => base_path('Modules/Admins/resources/views/'),
         ], 'admin');
-       
-        $this->registerAdminRoutes();
 
+        $this->registerAdminRoutes();
     }
 
     protected function registerAdminRoutes()
@@ -48,7 +55,7 @@ class AdminServiceProvider extends ServiceProvider
         $admin = DB::table('admins')
             ->orderBy('created_at', 'asc')
             ->first();
-            
+
         $slug = $admin->website_slug ?? 'admin';
 
         $routeFile = base_path('Modules/Admins/routes/web.php');
@@ -83,14 +90,14 @@ class AdminServiceProvider extends ServiceProvider
         $filesWithNamespaces = [
             // Controllers
             __DIR__ . '/../src/Controllers/AdminManagerController.php' => base_path('Modules/Admins/app/Http/Controllers/Admin/AdminManagerController.php'),
-            
+
             // Mail
             __DIR__ . '/../src/Mail/WelcomeAdminMail.php' => base_path('Modules/Admins/app/Mail/WelcomeAdminMail.php'),
-            
+
             // Requests
             __DIR__ . '/../src/Requests/AdminCreateRequest.php' => base_path('Modules/Admins/app/Http/Requests/AdminCreateRequest.php'),
             __DIR__ . '/../src/Requests/AdminUpdateRequest.php' => base_path('Modules/Admins/app/Http/Requests/AdminUpdateRequest.php'),
-            
+
             // Routes
             __DIR__ . '/routes/web.php' => base_path('Modules/Admins/routes/web.php'),
         ];
@@ -99,13 +106,13 @@ class AdminServiceProvider extends ServiceProvider
             if (File::exists($source)) {
                 // Create destination directory if it doesn't exist
                 File::ensureDirectoryExists(dirname($destination));
-                
+
                 // Read the source file
                 $content = File::get($source);
-                
+
                 // Transform namespaces based on file type
                 $content = $this->transformNamespaces($content, $source);
-                
+
                 // Write the transformed content to destination
                 File::put($destination, $content);
             }
@@ -123,12 +130,12 @@ class AdminServiceProvider extends ServiceProvider
             'namespace admin\\admins\\Controllers;' => 'namespace Modules\\Admins\\app\\Http\\Controllers\\Admin;',
             'namespace admin\\admins\\Mail;' => 'namespace Modules\\Admins\\app\\Mail;',
             'namespace admin\\admins\\Requests;' => 'namespace Modules\\Admins\\app\\Http\\Requests;',
-            
+
             // Use statements transformations
             'use admin\\admins\\Controllers\\' => 'use Modules\\Admins\\app\\Http\\Controllers\\Admin\\',
             'use admin\\admins\\Mail\\' => 'use Modules\\Admins\\app\\Mail\\',
             'use admin\\admins\\Requests\\' => 'use Modules\\Admins\\app\\Http\\Requests\\',
-            
+
             // Class references in routes
             'admin\\admins\\Controllers\\AdminManagerController' => 'Modules\\Admins\\app\\Http\\Controllers\\Admin\\AdminManagerController',
         ];
@@ -163,13 +170,13 @@ class AdminServiceProvider extends ServiceProvider
             'use Modules\\Admins\\app\\Mail\\WelcomeAdminMail;',
             $content
         );
-        
+
         $content = str_replace(
             'use admin\\admins\\Requests\\AdminCreateRequest;',
             'use Modules\\Admins\\app\\Http\\Requests\\AdminCreateRequest;',
             $content
         );
-        
+
         $content = str_replace(
             'use admin\\admins\\Requests\\Admin;',
             'use Modules\\Admins\\app\\Http\\Requests\\Admin;',
