@@ -169,10 +169,20 @@ class AdminServiceProvider extends ServiceProvider
             'use Modules\\Admins\\app\\Http\\Requests\\AdminCreateRequest;',
             $content
         );
-        
+
         $content = str_replace(
-            'use admin\\admins\\Requests\\Admin;',
-            'use Modules\\Admins\\app\\Http\\Requests\\Admin;',
+            'use admin\\admins\\Requests\\AdminUpdateRequest;',
+            'use Modules\\Admins\\app\\Http\\Requests\\AdminUpdateRequest;',
+            $content
+        );
+        $content = str_replace(
+            'use admin\\admin_auth\\Models\\Admin;',
+            'use Modules\\Admins\\app\\Http\\Models\\Admin;',
+            $content
+        );
+        $content = str_replace(
+            'use admin\\admin_role_permissions\\Models\\Role;',
+            'use Modules\\AdminRolePermissions\\app\\Http\\Models\\Role;',
             $content
         );
 

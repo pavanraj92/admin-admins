@@ -98,6 +98,16 @@ class PublishAdminsModuleCommand extends Command
             $content = str_replace('use admin\\admins\\Mail\\WelcomeAdminMail;', 'use Modules\\Admins\\app\\Mail\\WelcomeAdminMail;', $content);
             $content = str_replace('use admin\\admins\\Requests\\AdminCreateRequest;', 'use Modules\\Admins\\app\\Http\\Requests\\AdminCreateRequest;', $content);
             $content = str_replace('use admin\\admins\\Requests\\AdminUpdateRequest;', 'use Modules\\Admins\\app\\Http\\Requests\\AdminUpdateRequest;', $content);
+            $content = str_replace(
+                'use admin\\admin_auth\\Models\\Admin;',
+                'use Modules\\Admins\\app\\Http\\Models\\Admin;',
+                $content
+            );
+            $content = str_replace(
+                'use admin\\admin_role_permissions\\Models\\Role;',
+                'use Modules\\AdminRolePermissions\\app\\Http\\Models\\Role;',
+                $content
+            );
         }
 
         return $content;
