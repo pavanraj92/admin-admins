@@ -3,6 +3,7 @@
 namespace admin\admins\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class AdminUpdateRequest extends FormRequest
 {
@@ -26,7 +27,7 @@ class AdminUpdateRequest extends FormRequest
                 'string',
                 'email:rfc,dns',
                 'max:100',
-                'unique:admins,email,' . $adminId,
+                Rule::unique('admins', 'email')->ignore($this->route('admin')->id)->whereNull('deleted_at'),
             ],
             'first_name' => 'required|string|min:3|max:100',
             'last_name'  => 'required|string|min:3|max:100',

@@ -2,6 +2,7 @@
 
 namespace admin\admins\Requests;
 
+use Illuminate\Validation\Rule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AdminCreateRequest extends FormRequest
@@ -25,7 +26,7 @@ class AdminCreateRequest extends FormRequest
                 'string',
                 'email:rfc,dns',
                 'max:100',
-                'unique:admins,email',
+                Rule::unique('admins', 'email')->whereNull('deleted_at'),
             ],
             'first_name' => 'required|string|min:3|max:100',
             'last_name' => 'required|string|min:3|max:100',
