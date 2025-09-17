@@ -177,12 +177,12 @@ class AdminServiceProvider extends ServiceProvider
         );
         $content = str_replace(
             'use admin\\admin_auth\\Models\\Admin;',
-            'use Modules\\Admins\\app\\Http\\Models\\Admin;',
+            'use Modules\\AdminAuth\\app\\Models\\Admin;',
             $content
         );
         $content = str_replace(
             'use admin\\admin_role_permissions\\Models\\Role;',
-            'use Modules\\AdminRolePermissions\\app\\Http\\Models\\Role;',
+            'use Modules\\AdminRolePermissions\\app\\Models\\Role;',
             $content
         );
 
